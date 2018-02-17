@@ -244,7 +244,45 @@ function AppleProduct(name, kind) {
 }
 
 ```
+```
+// We want AppleProduct to inherit from Device. 
+// How do we make available to AppleProduct 
+// the functions created for Device?
 
+function Device(kind) {
+  this.kind =  kind;
+}
+
+Device.prototype.printKind = function () {
+  console.log(this.kind);
+};
+
+function AppleProduct(name, kind) {
+  this.name = name;
+Device.call(this, kind);
+}
+
+// A
+AppleProduct.prototype = Object.create(Device.prototype);
+// B
+AppleProduct.prototype.__proto__ = Device.prototype;
+// C
+Nothing, the functions are already available!
+```
+
+```
+// What does the below code print out?
+var Device = {
+  kind:"Music Player"
+};
+
+var AppleProduct = Object.create(Device, {
+  name: "iPod"
+});
+
+var purchase = Object.create(AppleProduct);
+console.log(purchase.name);
+```
 
 ```
 
